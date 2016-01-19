@@ -49,7 +49,7 @@
         <div>
             <form action="/OnlineShopping/AdminServlet" method="post" class="form-horizontal">
                 <fieldset>
-                    <legend>Login User</legend>
+                    <legend>Product Details</legend>
                     <div class="form-group">
                         <label for="inputProd" class="col-lg-2 control-label">Product Name</label>
                         <div class="col-lg-10">

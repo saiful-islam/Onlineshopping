@@ -7,13 +7,13 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import onlineShoppingIntegrationPackage.ShoppingCartControllerRemote;
 import onlineShoppingIntegrationPackage.UserControllerRemote;
 
 /**
@@ -22,6 +22,9 @@ import onlineShoppingIntegrationPackage.UserControllerRemote;
  */
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
+
+    @EJB
+    private ShoppingCartControllerRemote shoppingCartController;
 
     @EJB
     private UserControllerRemote userController;
@@ -52,8 +55,7 @@ public class UserServlet extends HttpServlet {
                 out.println("location='User/RegisterUser.jsp';");
                 out.println("</script>");
             } else if (userController.AddUser(userName, password, email, role)) {
-                
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                response.sendRedirect("User/Login.jsp");
             } else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('User or password incorrect. re enter user name and password again.');");
@@ -80,18 +82,15 @@ public class UserServlet extends HttpServlet {
             String ProductIds = request.getParameter("inputProductIds");
             String deliveryDate = request.getParameter("inputDate");
             String phone = request.getParameter("inputPhone");
-            
-//            if (userController.IsValidUser(userName, password)) {
-//                String roleName=userController.GetUserRole(userName);
-//                request.getSession().setAttribute("userName", userName);
-//                request.getSession().setAttribute("roleName", roleName);
-//                request.getRequestDispatcher("Index.jsp").forward(request, response); 
-//            } else {
-//                out.println("<script type=\"text/javascript\">");
-//                out.println("alert('User or password incorrect. re enter user name and password again.');");
-//                out.println("location='User/RegisterUser.jsp';");
-//                out.println("</script>");
-//            }
+            String userName = (String) request.getSession().getAttribute("userName");
+            if (shoppingCartController.AddShoppingCart(deliveryAddress+","+deliveryDate+","+phone, ProductIds,userName)) {
+               request.getRequestDispatcher("Confirm.jsp").forward(request, response); 
+            } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Shopping Cart Error.');");
+                out.println("location='shoppingcart.jsp';");
+                out.println("</script>");
+            }
         }
 
     }

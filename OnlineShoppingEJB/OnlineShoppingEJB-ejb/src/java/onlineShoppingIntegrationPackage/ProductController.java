@@ -36,8 +36,7 @@ public class ProductController implements ProductControllerRemote {
             session.save(objProduct);
             System.out.println("Inserted Successfully");
             session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
+           
             return true;
         } catch (Exception ex) {
             return false;
@@ -62,9 +61,6 @@ public class ProductController implements ProductControllerRemote {
                 maxId = temp;
             }
         }
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
         return maxId + 1;
         } catch (Exception ex) {
             return 1;
@@ -86,9 +82,6 @@ public class ProductController implements ProductControllerRemote {
                 String temp = _prod.GetProductId() + "," + _prod.GetProductName() + "," + _prod.GetPrice();
                 productList += "|" + temp;
             }
-            session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
             return productList.substring(1);
         } catch (Exception ex) {
             return "";
@@ -107,6 +100,31 @@ public class ProductController implements ProductControllerRemote {
         Object _product = query.uniqueResult();
         product _prod = (product) _product;
         return _prod.GetProductId() + "," + _prod.GetProductName() + "," + _prod.GetPrice();
+    }
+
+    @Override
+    public boolean UpdateProduct(int _productId, String _productName, float _price) {
+        try {
+            product objProduct = new product();
+            objProduct.SetProductId(_productId);
+            objProduct.SetProductName(_productName);
+            objProduct.SetPrice(_price);
+
+            //Create session factory object
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            //getting session object from session factory
+            Session session = sessionFactory.openSession();
+            //getting transaction object from session object
+            session.beginTransaction();
+
+            session.update(objProduct);
+            System.out.println("Updated Successfully");
+            session.getTransaction().commit();
+           
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
 }

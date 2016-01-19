@@ -28,7 +28,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="Index.jsp">Online Shopping System</a>
+                        <a class="navbar-brand" href="../Index.jsp">Online Shopping System</a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -77,6 +77,7 @@
                         <td><%=productId%></td>
                         <td><%=productName%></td>
                         <td><%=Price%></td>
+                        <td><a class="btn btn-primary btn-xs" href="EditProduct.jsp?id=<%=productId%>&name=<%=productName%>&price=<%=Price%>">Edit</a></td>
                     </tr>
                     <%}%>
                 </tbody>

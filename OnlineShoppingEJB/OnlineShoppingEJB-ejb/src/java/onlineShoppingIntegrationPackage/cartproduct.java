@@ -18,6 +18,7 @@ public class cartproduct implements Serializable {
     @Column(name = "cartid")
     private int cartid;
 
+    @Id
     @Column(name = "productid")
     private int productid;
 

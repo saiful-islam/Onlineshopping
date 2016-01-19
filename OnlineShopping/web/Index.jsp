@@ -70,7 +70,9 @@
                 <tbody>
                     <%
                         Helper objHelper = new Helper();
-                        for (String product : objHelper.GetAllProduct().split("\\|")) {
+                        try{
+                        String [] prods = objHelper.GetAllProduct().split("\\|");
+                        for (String product : prods) {
                             String productId = product.split(",")[0];
                             String productName = product.split(",")[1];
                             String Price = product.split(",")[2];
@@ -81,7 +83,7 @@
                         <td><%=Price%></td>
                         <td> <a href="#" onclick="selectProduct(<%=productId%>,'<%=productName%>','<%=Price%>')" class="btn btn-primary btn-xs">Select</a>  </td>
                     </tr>
-                    <%}%>
+                    <%}}catch(Exception ex){}%>
                 </tbody>
             </table>
         </div>
@@ -97,7 +99,7 @@
                     ids = id+','+name+','+price;
                     sessionStorage.setItem('productKey', id+','+name+','+price);
                 }
-                alert(ids);
+                alert("You Add "+name);
             }
         </script>
     </body>

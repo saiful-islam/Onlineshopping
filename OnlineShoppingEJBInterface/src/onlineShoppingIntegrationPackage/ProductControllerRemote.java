@@ -21,5 +21,7 @@ public interface ProductControllerRemote {
     String GetAllProducts();
 
     String GetProduct(int _productId);
+
+    boolean UpdateProduct(int _productId, String _productName, float _price);
     
 }

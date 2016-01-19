@@ -37,8 +37,6 @@ public class UserController implements UserControllerRemote {
             session.save(objuser);
             System.out.println("Inserted Successfully");
             session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
             return true;
         } catch (Exception ex) {
             return false;
@@ -62,11 +60,9 @@ public class UserController implements UserControllerRemote {
                     break;
                 }
             }
-            session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
             return isValid;
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -85,9 +81,7 @@ public class UserController implements UserControllerRemote {
             for (user _user : _users) {
                 role = _user.GetRole();
             }
-            session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
+            
             return role;
         } catch (Exception ex) {
             return "";
@@ -109,9 +103,7 @@ public class UserController implements UserControllerRemote {
                 isExist = true;
                 break;
             }
-            session.getTransaction().commit();
-            session.close();
-            sessionFactory.close();
+            
             return isExist;
         } catch (Exception ex) {
             return false;

@@ -43,15 +43,27 @@ public class AdminServlet extends HttpServlet {
             String productName = request.getParameter("inputProductName");
             float price = Float.parseFloat(request.getParameter("inputPrice"));
             if (productController.AddProduct(productName, price)) {
-                request.getRequestDispatcher("Admin/Product.jsp").forward(request, response);
+                response.sendRedirect("Admin/Product.jsp");
+                //request.getRequestDispatcher("Admin/Product.jsp").forward(request, response);
             } else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Error On Product');");
                 out.println("location='Admin/Product.jsp';");
                 out.println("</script>");
             }
-        } else if (action.equalsIgnoreCase("login")) {
-            
+        } else if (action.equalsIgnoreCase("editproduct")) {
+            String productName = request.getParameter("inputProductName");
+            float price = Float.parseFloat(request.getParameter("inputPrice"));
+            System.out.println(request.getParameter("inputProductId"));
+            int prodId = Integer.parseInt(request.getParameter("inputProductId"));
+             if (productController.UpdateProduct(prodId,productName, price)) {
+                response.sendRedirect("Admin/Product.jsp");
+            } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Error On Edit Product');");
+                out.println("location='Admin/Product.jsp';");
+                out.println("</script>");
+            }
         }
     }
 
