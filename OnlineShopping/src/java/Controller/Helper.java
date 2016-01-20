@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import onlineShoppingIntegrationPackage.ProductControllerRemote;
+import onlineShoppingIntegrationPackage.ShoppingCartControllerRemote;
 
 /**
  *
@@ -18,16 +19,32 @@ import onlineShoppingIntegrationPackage.ProductControllerRemote;
  */
 public class Helper {
 
+    ShoppingCartControllerRemote shoppingCartController = lookupShoppingCartControllerRemote();
+
     ProductControllerRemote productController = lookupProductControllerRemote();
     public String GetAllProduct()
     {
         return productController.GetAllProducts();
+    }
+    public String GetShoppingCartByUser(String _userName)
+    {
+        return shoppingCartController.GetShoppingCartByUser(_userName);
     }
 
     private ProductControllerRemote lookupProductControllerRemote() {
         try {
             Context c = new InitialContext();
             return (ProductControllerRemote) c.lookup("java:global/OnlineShoppingEJB/OnlineShoppingEJB-ejb/ProductController!onlineShoppingIntegrationPackage.ProductControllerRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ShoppingCartControllerRemote lookupShoppingCartControllerRemote() {
+        try {
+            Context c = new InitialContext();
+            return (ShoppingCartControllerRemote) c.lookup("java:global/OnlineShoppingEJB/OnlineShoppingEJB-ejb/ShoppingCartController!onlineShoppingIntegrationPackage.ShoppingCartControllerRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

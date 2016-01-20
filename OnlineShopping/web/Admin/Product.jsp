@@ -39,7 +39,10 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><%=session.getAttribute("userName")%></li>
+                            <li>
+                                <h4 style="color: red; font-weight: bold;">
+                                    <%=session.getAttribute("userName")%></h4>
+                            </li>
                             <li><a href="../User/Logoff.jsp">sign out</a></li>
                         </ul>
                     </div>

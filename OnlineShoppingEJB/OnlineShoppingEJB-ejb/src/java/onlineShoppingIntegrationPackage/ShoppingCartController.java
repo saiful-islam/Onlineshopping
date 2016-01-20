@@ -92,4 +92,26 @@ public class ShoppingCartController implements ShoppingCartControllerRemote {
         }
     }
 
+    @Override
+    public String GetShoppingCartByUser(String _userName) {
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            //getting session object from session factory
+            Session session = sessionFactory.openSession();
+            //getting transaction object from session object
+            session.beginTransaction();
+            Query query = session.createQuery("from shoppingcart where username='"+_userName+"'");
+           
+            List<shoppingcart> _shopCarts = query.list();
+            String carts="";
+            for (shoppingcart _cart : _shopCarts) {
+               carts +="|"+ _cart.GetCartId()+","+_cart.GetPrice()+","+_cart.GetDelivaryAddress()+","+_cart.GetDate()+","+_cart.GetPhoneNo();
+                
+            } 
+            return carts.substring(1);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
 }

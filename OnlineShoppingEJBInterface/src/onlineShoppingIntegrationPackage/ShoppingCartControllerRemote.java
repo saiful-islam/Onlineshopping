@@ -17,5 +17,7 @@ public interface ShoppingCartControllerRemote {
     boolean AddShoppingCart(String _customerInfo, String _productInfo, String _userName);
 
     int GetMaxCartId();
+
+    String GetShoppingCartByUser(String _userName);
     
 }

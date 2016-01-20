@@ -41,10 +41,18 @@
                         
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                            <a href="shoppingcart.jsp">Shopping Cart</a>
+                                <a href="OrderListUser.jsp">Order</a>
                             </li>
                             <li>&nbsp;</li>
-                            <li><%=session.getAttribute("userName")%></li>
+                            <li>
+                            <a href="shoppingcart.jsp">Shopping Cart</a>
+                            </li>
+                            
+                            <li>&nbsp;</li>
+                            <li>
+                                <h4 style="color: red; font-weight: bold;">
+                               <%=session.getAttribute("userName")%></h4>
+                                </li>
                             <li><a href="User/Logoff.jsp">sign out</a></li>
                         </ul>
                     </div>
